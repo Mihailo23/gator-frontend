@@ -11,6 +11,7 @@ export default defineConfig({
     alias: {
       "@gator/elements": path.resolve(root, "../gator-elements/src/index.ts"),
     },
+    dedupe: ["react", "react-dom"],
   },
   test: {
     environment: "jsdom",
