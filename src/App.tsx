@@ -1,7 +1,5 @@
-import { Button } from "@gator/elements";
+import { HomeQuoteForm } from "./HomeQuoteForm.js";
 
-function App() {
-  return <Button>Get quote</Button>;
+export default function App() {
+  return <HomeQuoteForm />;
 }
-
-export default App;

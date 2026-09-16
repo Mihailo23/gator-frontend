@@ -1,0 +1,59 @@
+.slip {
+  width: min(560px, 100%);
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  font-size: var(--text-body);
+  font-family: var(--font-sans);
+}
+
+.spine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: var(--pad-form);
+  background: color-mix(in srgb, var(--signal) 18%, var(--card));
+  border-bottom: 2px dotted var(--line);
+}
+
+.kicker {
+  font-size: 11px;
+  color: var(--mute);
+}
+
+.id {
+  font: 700 18px/1.1 var(--font-serif);
+  margin: 6px 0 0;
+}
+
+.body {
+  padding: var(--pad-form);
+  display: grid;
+  gap: 14px;
+}
+
+.title {
+  font: 600 30px/1.05 var(--font-serif);
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.lede {
+  margin: 0;
+  color: var(--mute);
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.note {
+  margin: 0;
+  color: var(--mute);
+  font-size: 13px;
+}
