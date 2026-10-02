@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Button, TextField } from "@gator/elements";
-import styles from "./PublicAgencyEntry.module.css";
+import entry from "./PublicAgencyEntry.module.css";
+import slip from "./slip.module.css";
 
 type Step = "welcome" | "verify" | "find" | "stop";
 
@@ -12,20 +13,12 @@ const FIXTURE_AGENCIES: Agency[] = [
   { name: "Cedar Street Agency", city: "Columbus", state: "OH" },
 ];
 
-const STEP_LABELS = ["Verify", "Agency", "Admin"] as const;
-
 function isWorkEmail(value: string): boolean {
   return /^[^@\s]+@[^@\s]+$/.test(value.trim());
 }
 
 function isVerificationCode(value: string): boolean {
   return /^\d{6}$/.test(value.trim());
-}
-
-function stepIndex(step: Step): number {
-  if (step === "verify") return 0;
-  if (step === "find") return 1;
-  return 2;
 }
 
 export function PublicAgencyEntry() {
@@ -86,28 +79,15 @@ export function PublicAgencyEntry() {
     if (step === "find" && matches.length === 0) addAgency();
   }
 
-  const current = stepIndex(step);
-
   return (
-    <form className={styles.screen} onSubmit={onSubmit}>
-      <header className={styles.brand}>
-        <p className={styles.mark}>AIUS</p>
-        <p className={styles.tag}>Agency onboarding</p>
-      </header>
-      {step === "welcome" ? null : (
-        <ol className={styles.steps}>
-          {STEP_LABELS.map((label, index) => (
-            <li
-              key={label}
-              className={`${styles.step} ${index === current ? styles.current : ""} ${index < current ? styles.done : ""}`}
-            >
-              <span className={styles.num}>{index + 1}</span>
-              {label}
-            </li>
-          ))}
-        </ol>
-      )}
-      <div className={styles.sheet}>{body()}</div>
+    <form className={slip.slip} onSubmit={onSubmit}>
+      <div className={slip.spine}>
+        <div>
+          <div className={slip.kicker}>Agency onboarding</div>
+          <p className={slip.id}>New agency</p>
+        </div>
+      </div>
+      <div className={slip.body}>{body()}</div>
     </form>
   );
 
@@ -115,12 +95,10 @@ export function PublicAgencyEntry() {
     if (step === "welcome") {
       return (
         <>
-          <div className={styles.hero}>
-            <h1 className={styles.heroTitle}>Get started</h1>
-            <p className={styles.heroLede}>
-              You are appointing an agency. We need a work email before anything else.
-            </p>
-          </div>
+          <h1 className={slip.title}>Get started</h1>
+          <p className={slip.lede}>
+            You are appointing an agency. We need a work email before anything else.
+          </p>
           <Button type="submit">Get started</Button>
         </>
       );
@@ -129,10 +107,8 @@ export function PublicAgencyEntry() {
     if (step === "verify") {
       return (
         <>
-          <h1 className={styles.title}>Let’s verify your identity</h1>
-          <p className={styles.lede}>
-            A work email confirms who started, before any agency details.
-          </p>
+          <h1 className={slip.title}>Let’s verify your identity</h1>
+          <p className={slip.lede}>A work email confirms who started, before any agency details.</p>
           <TextField id="work-email" label="Work email" value={email} onChange={setEmail} />
           <Button type={codeSent ? "button" : "submit"} onClick={sendCode}>
             Send code
@@ -140,16 +116,13 @@ export function PublicAgencyEntry() {
           {codeSent ? (
             <>
               <TextField id="code" label="Code" value={code} onChange={setCode} />
-              <p className={styles.lede}>Any 6 digits.</p>
-              {codeError ? <p className={styles.lede}>{codeError}</p> : null}
+              <p className={slip.note}>Any 6 digits.</p>
+              {codeError ? <p className={slip.note}>{codeError}</p> : null}
               <Button type="submit" onClick={continueFromCode}>
                 Continue
               </Button>
             </>
           ) : null}
-          <p className={styles.note}>
-            We ask for this so a public visit is tied to a person, not an anonymous click.
-          </p>
         </>
       );
     }
@@ -157,28 +130,26 @@ export function PublicAgencyEntry() {
     if (step === "stop" && agency) {
       return (
         <>
-          <h1 className={styles.title}>Admin still needed</h1>
-          <div className={styles.card}>
-            <p className={styles.name}>{agency.name}</p>
-            <p className={styles.place}>
-              {agency.city}, {agency.state}
-            </p>
-            <p className={styles.place}>{email}</p>
-          </div>
-          <p className={styles.lede}>An owner still has to confirm who the admin is.</p>
+          <h1 className={slip.title}>Admin still needed</h1>
+          <p className={slip.id}>{agency.name}</p>
+          <p className={entry.place}>
+            {agency.city}, {agency.state}
+          </p>
+          <p className={entry.place}>{email}</p>
+          <p className={slip.lede}>An owner still has to confirm who the admin is.</p>
         </>
       );
     }
 
     return (
       <>
-        <h1 className={styles.title}>Find your agency</h1>
-        <p className={styles.lede}>Search by name. A match shows the city and state.</p>
+        <h1 className={slip.title}>Find your agency</h1>
+        <p className={slip.lede}>Search by name. A match shows the city and state.</p>
         <TextField id="agency-search" label="Agency name" value={query} onChange={setQuery} />
         {matches.map((item) => (
-          <div key={item.name} className={styles.card}>
-            <p className={styles.name}>{item.name}</p>
-            <p className={styles.place}>
+          <div key={item.name} className={entry.match}>
+            <p className={slip.id}>{item.name}</p>
+            <p className={entry.place}>
               {item.city}, {item.state}
             </p>
             <Button
@@ -194,17 +165,15 @@ export function PublicAgencyEntry() {
         ))}
         {matches.length === 0 ? (
           <>
-            <h2 className={styles.section}>Add your agency</h2>
-            <p className={styles.lede}>
-              Don’t see it in the list? Add the public name and location.
-            </p>
+            <h2 className={entry.section}>Add your agency</h2>
+            <p className={slip.lede}>Don’t see it in the list? Add the public name and location.</p>
             <TextField
               id="agency-name"
               label="Agency name"
               value={draftName}
               onChange={setDraftName}
             />
-            <div className={styles.pair}>
+            <div className={slip.pair}>
               <TextField id="city" label="City" value={draftCity} onChange={setDraftCity} />
               <TextField id="state" label="State" value={draftState} onChange={setDraftState} />
             </div>

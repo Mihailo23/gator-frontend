@@ -1,142 +1,9 @@
-.screen {
-  width: min(440px, 100%);
+.match {
   display: grid;
-  gap: 0;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--card);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
-}
-
-.brand {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 18px 20px;
-  background: var(--ink);
-  color: var(--card);
-}
-
-.mark {
-  margin: 0;
-  font: 700 22px/1 var(--font-serif);
-  letter-spacing: 0.08em;
-}
-
-.tag {
-  margin: 0;
-  font-size: 12px;
-  color: color-mix(in srgb, var(--card) 72%, transparent);
-}
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin: 0;
-  padding: 16px 16px 0;
-  list-style: none;
-}
-
-.step {
-  display: grid;
-  justify-items: center;
-  gap: 6px;
-  color: var(--mute);
-  font-size: 12px;
-  text-align: center;
-}
-
-.num {
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--card);
-  font: 600 13px/1 var(--font-sans);
-}
-
-.current {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.current .num {
-  background: var(--ink);
-  color: var(--card);
-  border-color: var(--ink);
-}
-
-.done .num {
-  background: color-mix(in srgb, var(--signal) 22%, var(--card));
-  border-color: var(--signal);
-  color: var(--ink);
-}
-
-.sheet {
-  display: grid;
-  gap: 14px;
-  padding: 22px 20px 24px;
-}
-
-.hero {
-  display: grid;
-  gap: 8px;
-  margin: -22px -20px 4px;
-  padding: 28px 20px 22px;
-  background: var(--ink);
-  color: var(--card);
-}
-
-.heroTitle {
-  margin: 0;
-  font: 600 32px/1.05 var(--font-serif);
-  letter-spacing: -0.03em;
-  color: var(--card);
-}
-
-.heroLede {
-  margin: 0;
-  color: color-mix(in srgb, var(--card) 86%, transparent);
-}
-
-.title {
-  margin: 0;
-  font: 600 28px/1.1 var(--font-serif);
-  letter-spacing: -0.03em;
-}
-
-.lede {
-  margin: 0;
-  color: var(--mute);
-}
-
-.note {
-  margin: 0;
-  padding: 12px 14px;
-  border-radius: var(--radius);
-  background: color-mix(in srgb, var(--ink) 6%, var(--card));
-  color: var(--mute);
-  font-size: 14px;
-}
-
-.card {
-  display: grid;
-  gap: 8px;
-  padding: 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-}
-
-.name {
-  margin: 0;
-  font: 700 18px/1.2 var(--font-serif);
+  justify-items: start;
+  gap: 4px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
 }
 
 .place {
@@ -146,27 +13,7 @@
 }
 
 .section {
-  margin: 4px 0 0;
-  font: 600 22px/1.1 var(--font-serif);
-  letter-spacing: -0.03em;
-}
-
-.pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.sheet button {
-  width: 100%;
-}
-
-@media (max-width: 380px) {
-  .pair {
-    grid-template-columns: 1fr;
-  }
-
-  .tag {
-    display: none;
-  }
+  margin: 8px 0 0;
+  font: 600 22px/1.15 var(--font-serif);
+  letter-spacing: -0.02em;
 }
