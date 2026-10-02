@@ -31,5 +31,5 @@
 
 .section {
   margin: var(--space-2) 0 0;
-  font: 600 var(--text-lg) / 1.15 var(--font-serif);
+  font: 700 var(--text-lg) / 1.15 var(--font-serif);
 }

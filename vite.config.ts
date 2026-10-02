@@ -13,6 +13,11 @@ export default defineConfig({
     },
     dedupe: ["react", "react-dom"],
   },
+  server: {
+    fs: {
+      allow: [root, path.resolve(root, "../gator-elements")],
+    },
+  },
   test: {
     environment: "jsdom",
     setupFiles: "./src/test-setup.ts",

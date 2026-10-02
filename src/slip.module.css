@@ -25,7 +25,7 @@
 }
 
 .id {
-  font: 600 var(--text-lg) / 1.15 var(--font-serif);
+  font: 700 var(--text-lg) / 1.15 var(--font-serif);
   margin: var(--space-1) 0 0;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .title {
-  font: 600 var(--text-xl) / 1.15 var(--font-serif);
+  font: 700 var(--text-xl) / 1.15 var(--font-serif);
   margin: 0;
 }
 
