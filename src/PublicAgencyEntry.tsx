@@ -80,13 +80,7 @@ export function PublicAgencyEntry() {
   }
 
   return (
-    <form className={slip.slip} onSubmit={onSubmit}>
-      <div className={slip.spine}>
-        <div>
-          <div className={slip.kicker}>Agency onboarding</div>
-          <p className={slip.id}>New agency</p>
-        </div>
-      </div>
+    <form className={`${slip.slip} ${entry.mark}`} onSubmit={onSubmit}>
       <div className={slip.body}>{body()}</div>
     </form>
   );
@@ -131,12 +125,14 @@ export function PublicAgencyEntry() {
       return (
         <>
           <h1 className={slip.title}>Admin still needed</h1>
-          <p className={slip.id}>{agency.name}</p>
-          <p className={entry.place}>
-            {agency.city}, {agency.state}
-          </p>
-          <p className={entry.place}>{email}</p>
           <p className={slip.lede}>An owner still has to confirm who the admin is.</p>
+          <div className={entry.facts}>
+            <p className={entry.name}>{agency.name}</p>
+            <p className={entry.place}>
+              {agency.city}, {agency.state}
+            </p>
+            <p className={entry.place}>{email}</p>
+          </div>
         </>
       );
     }
@@ -148,7 +144,7 @@ export function PublicAgencyEntry() {
         <TextField id="agency-search" label="Agency name" value={query} onChange={setQuery} />
         {matches.map((item) => (
           <div key={item.name} className={entry.match}>
-            <p className={slip.id}>{item.name}</p>
+            <p className={entry.name}>{item.name}</p>
             <p className={entry.place}>
               {item.city}, {item.state}
             </p>
