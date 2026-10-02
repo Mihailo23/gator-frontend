@@ -1,0 +1,35 @@
+.match {
+  display: grid;
+  justify-items: start;
+  gap: 4px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.mark {
+  border-top: 3px solid var(--signal);
+}
+
+.facts {
+  display: grid;
+  gap: 2px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.name {
+  margin: 0;
+  font-weight: 600;
+}
+
+.place {
+  margin: 0;
+  color: var(--mute);
+  font-size: 15px;
+}
+
+.section {
+  margin: 8px 0 0;
+  font: 600 22px/1.15 var(--font-serif);
+  letter-spacing: -0.02em;
+}

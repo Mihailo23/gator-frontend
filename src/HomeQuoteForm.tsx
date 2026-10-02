@@ -1,6 +1,6 @@
 import { Badge, Button, SegmentedControl, TextField } from "@gator/elements";
 import { useState, type FormEvent } from "react";
-import styles from "./HomeQuoteForm.module.css";
+import styles from "./slip.module.css";
 
 export function HomeQuoteForm() {
   const [address, setAddress] = useState("14 Linden Street, Apt 4B");
