@@ -53,6 +53,18 @@ describe("PublicAgencyEntry", () => {
     expect(screen.getByLabelText("Code")).toBeInTheDocument();
   });
 
+  it("stays on verify when email becomes invalid after send", async () => {
+    const user = await reachVerify();
+    await user.type(screen.getByLabelText("Work email"), "ada@northline.test");
+    await user.click(screen.getByRole("button", { name: "Send code" }));
+    await user.clear(screen.getByLabelText("Work email"));
+    await user.type(screen.getByLabelText("Work email"), "not-an-email");
+    await user.type(screen.getByLabelText("Code"), "123456");
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(screen.getByLabelText("Code")).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Admin still needed" })).not.toBeInTheDocument();
+  });
+
   it("continues only for exactly six digits", async () => {
     const user = await reachVerify();
     await user.type(screen.getByLabelText("Work email"), "ada@northline.test");

@@ -6,17 +6,17 @@ type Step = "welcome" | "verify" | "find" | "stop";
 
 export type Agency = { name: string; city: string; state: string };
 
-export const FIXTURE_AGENCIES: Agency[] = [
+const FIXTURE_AGENCIES: Agency[] = [
   { name: "Northline Insurance", city: "Denver", state: "CO" },
   { name: "Harbor Mutual", city: "Austin", state: "TX" },
   { name: "Cedar Street Agency", city: "Columbus", state: "OH" },
 ];
 
-export function isWorkEmail(value: string): boolean {
+function isWorkEmail(value: string): boolean {
   return /^[^@\s]+@[^@\s]+$/.test(value.trim());
 }
 
-export function isVerificationCode(value: string): boolean {
+function isVerificationCode(value: string): boolean {
   return /^\d{6}$/.test(value.trim());
 }
 
@@ -47,7 +47,7 @@ export function PublicAgencyEntry() {
   }
 
   function continueFromCode() {
-    if (!isVerificationCode(code)) return;
+    if (!isWorkEmail(email) || !isVerificationCode(code)) return;
     setStep("find");
   }
 
