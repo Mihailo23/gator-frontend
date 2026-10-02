@@ -132,4 +132,28 @@ describe("PublicAgencyEntry", () => {
     expect(screen.getByText("Boise, ID")).toBeInTheDocument();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
+
+  it("stays on Find when city is only whitespace", async () => {
+    const user = await reachFind();
+    const name = document.getElementById("agency-name") as HTMLInputElement;
+    const city = document.getElementById("city") as HTMLInputElement;
+    const state = document.getElementById("state") as HTMLInputElement;
+    await user.type(name, "Pike Insurance");
+    await user.type(city, "   ");
+    await user.type(state, "ID");
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(screen.queryByRole("heading", { name: "Admin still needed" })).not.toBeInTheDocument();
+  });
+
+  it("stays on Find when state is only whitespace", async () => {
+    const user = await reachFind();
+    const name = document.getElementById("agency-name") as HTMLInputElement;
+    const city = document.getElementById("city") as HTMLInputElement;
+    const state = document.getElementById("state") as HTMLInputElement;
+    await user.type(name, "Pike Insurance");
+    await user.type(city, "Boise");
+    await user.type(state, "   ");
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(screen.queryByRole("heading", { name: "Admin still needed" })).not.toBeInTheDocument();
+  });
 });
