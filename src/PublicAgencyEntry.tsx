@@ -27,6 +27,18 @@ export function PublicAgencyEntry() {
   const [codeSent, setCodeSent] = useState(false);
   const [query, setQuery] = useState("");
   const [agency, setAgency] = useState<Agency | null>(null);
+  const [draftName, setDraftName] = useState("");
+  const [draftCity, setDraftCity] = useState("");
+  const [draftState, setDraftState] = useState("");
+
+  function addAgency() {
+    const name = draftName.trim();
+    const city = draftCity.trim();
+    const state = draftState.trim();
+    if (!name || !city || !state) return;
+    setAgency({ name, city, state });
+    setStep("stop");
+  }
 
   function sendCode() {
     if (!isWorkEmail(email)) return;
@@ -103,6 +115,20 @@ export function PublicAgencyEntry() {
           </Button>
         </div>
       ))}
+      {matches.length === 0 ? (
+        <>
+          <h2>Add your agency</h2>
+          <TextField
+            id="agency-name"
+            label="Agency name"
+            value={draftName}
+            onChange={setDraftName}
+          />
+          <TextField id="city" label="City" value={draftCity} onChange={setDraftCity} />
+          <TextField id="state" label="State" value={draftState} onChange={setDraftState} />
+          <Button onClick={addAgency}>Continue</Button>
+        </>
+      ) : null}
     </main>
   );
 }

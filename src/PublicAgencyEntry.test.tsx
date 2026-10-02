@@ -104,4 +104,32 @@ describe("PublicAgencyEntry", () => {
     expect(screen.getByText("An owner still has to confirm who the admin is.")).toBeInTheDocument();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
+
+  it("offers add when nothing matches, including an empty search", async () => {
+    const user = await reachFind();
+    expect(document.getElementById("agency-name")).toBeInTheDocument();
+    await user.type(document.getElementById("agency-search") as HTMLInputElement, "zzzz");
+    expect(screen.queryByRole("button", { name: /Select / })).not.toBeInTheDocument();
+    expect(document.getElementById("agency-name")).toBeInTheDocument();
+  });
+
+  it("stays on Find until name, city, and state are non-empty", async () => {
+    const user = await reachFind();
+    const name = document.getElementById("agency-name") as HTMLInputElement;
+    const city = document.getElementById("city") as HTMLInputElement;
+    const state = document.getElementById("state") as HTMLInputElement;
+    await user.type(name, "   ");
+    await user.type(city, "Boise");
+    await user.type(state, "ID");
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(screen.queryByRole("heading", { name: "Admin still needed" })).not.toBeInTheDocument();
+
+    await user.clear(name);
+    await user.type(name, "Pike Insurance");
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(screen.getByRole("heading", { name: "Admin still needed" })).toBeInTheDocument();
+    expect(screen.getByText("Pike Insurance")).toBeInTheDocument();
+    expect(screen.getByText("Boise, ID")).toBeInTheDocument();
+    expect(screen.queryByRole("button")).not.toBeInTheDocument();
+  });
 });
