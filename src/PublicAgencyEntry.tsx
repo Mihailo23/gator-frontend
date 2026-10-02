@@ -2,7 +2,15 @@ import { useState } from "react";
 import { Button, TextField } from "@gator/elements";
 import styles from "./PublicAgencyEntry.module.css";
 
-type Step = "welcome" | "verify" | "find";
+type Step = "welcome" | "verify" | "find" | "stop";
+
+export type Agency = { name: string; city: string; state: string };
+
+export const FIXTURE_AGENCIES: Agency[] = [
+  { name: "Northline Insurance", city: "Denver", state: "CO" },
+  { name: "Harbor Mutual", city: "Austin", state: "TX" },
+  { name: "Cedar Street Agency", city: "Columbus", state: "OH" },
+];
 
 export function isWorkEmail(value: string): boolean {
   return /^[^@\s]+@[^@\s]+$/.test(value.trim());
@@ -17,6 +25,8 @@ export function PublicAgencyEntry() {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
+  const [query, setQuery] = useState("");
+  const [agency, setAgency] = useState<Agency | null>(null);
 
   function sendCode() {
     if (!isWorkEmail(email)) return;
@@ -28,6 +38,13 @@ export function PublicAgencyEntry() {
     if (!isVerificationCode(code)) return;
     setStep("find");
   }
+
+  const matches =
+    query.trim() === ""
+      ? []
+      : FIXTURE_AGENCIES.filter((item) =>
+          item.name.toLowerCase().includes(query.trim().toLowerCase()),
+        );
 
   if (step === "welcome") {
     return (
@@ -54,9 +71,38 @@ export function PublicAgencyEntry() {
     );
   }
 
+  if (step === "stop" && agency) {
+    return (
+      <main className={styles.flow}>
+        <h1>Admin still needed</h1>
+        <p>{agency.name}</p>
+        <p>
+          {agency.city}, {agency.state}
+        </p>
+        <p>{email}</p>
+        <p>An owner still has to confirm who the admin is.</p>
+      </main>
+    );
+  }
+
   return (
     <main className={styles.flow}>
-      <TextField id="agency-search" label="Agency name" value="" onChange={() => {}} />
+      <TextField id="agency-search" label="Agency name" value={query} onChange={setQuery} />
+      {matches.map((item) => (
+        <div key={item.name}>
+          <p>
+            {item.city}, {item.state}
+          </p>
+          <Button
+            onClick={() => {
+              setAgency(item);
+              setStep("stop");
+            }}
+          >
+            {`Select ${item.name}`}
+          </Button>
+        </div>
+      ))}
     </main>
   );
 }
