@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { Button, TextField } from "@gator/elements";
 import styles from "./PublicAgencyEntry.module.css";
 
@@ -72,10 +72,24 @@ export function PublicAgencyEntry() {
           item.name.toLowerCase().includes(query.trim().toLowerCase()),
         );
 
+  function onSubmit(e: FormEvent) {
+    e.preventDefault();
+    if (step === "welcome") {
+      setStep("verify");
+      return;
+    }
+    if (step === "verify") {
+      if (!codeSent) sendCode();
+      else continueFromCode();
+      return;
+    }
+    if (step === "find" && matches.length === 0) addAgency();
+  }
+
   const current = stepIndex(step);
 
   return (
-    <article className={styles.screen}>
+    <form className={styles.screen} onSubmit={onSubmit}>
       <header className={styles.brand}>
         <p className={styles.mark}>AIUS</p>
         <p className={styles.tag}>Agency onboarding</p>
@@ -94,7 +108,7 @@ export function PublicAgencyEntry() {
         </ol>
       )}
       <div className={styles.sheet}>{body()}</div>
-    </article>
+    </form>
   );
 
   function body() {
@@ -107,7 +121,7 @@ export function PublicAgencyEntry() {
               You are appointing an agency. We need a work email before anything else.
             </p>
           </div>
-          <Button onClick={() => setStep("verify")}>Get started</Button>
+          <Button type="submit">Get started</Button>
         </>
       );
     }
@@ -120,13 +134,17 @@ export function PublicAgencyEntry() {
             A work email confirms who started, before any agency details.
           </p>
           <TextField id="work-email" label="Work email" value={email} onChange={setEmail} />
-          <Button onClick={sendCode}>Send code</Button>
+          <Button type={codeSent ? "button" : "submit"} onClick={sendCode}>
+            Send code
+          </Button>
           {codeSent ? (
             <>
               <TextField id="code" label="Code" value={code} onChange={setCode} />
               <p className={styles.lede}>Any 6 digits.</p>
               {codeError ? <p className={styles.lede}>{codeError}</p> : null}
-              <Button onClick={continueFromCode}>Continue</Button>
+              <Button type="submit" onClick={continueFromCode}>
+                Continue
+              </Button>
             </>
           ) : null}
           <p className={styles.note}>
@@ -190,7 +208,9 @@ export function PublicAgencyEntry() {
               <TextField id="city" label="City" value={draftCity} onChange={setDraftCity} />
               <TextField id="state" label="State" value={draftState} onChange={setDraftState} />
             </div>
-            <Button onClick={addAgency}>Continue</Button>
+            <Button type="submit" onClick={addAgency}>
+              Continue
+            </Button>
           </>
         ) : null}
       </>

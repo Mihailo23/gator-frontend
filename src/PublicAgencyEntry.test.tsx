@@ -53,6 +53,19 @@ describe("PublicAgencyEntry", () => {
     expect(screen.getByLabelText("Code")).toBeInTheDocument();
   });
 
+  it("sends the code when Enter is pressed in the email field", async () => {
+    const user = await reachVerify();
+    await user.type(screen.getByLabelText("Work email"), "ada@northline.test{Enter}");
+    expect(screen.getByLabelText("Code")).toBeInTheDocument();
+  });
+
+  it("continues when Enter is pressed in the code field", async () => {
+    const user = await reachVerify();
+    await user.type(screen.getByLabelText("Work email"), "ada@northline.test{Enter}");
+    await user.type(screen.getByLabelText("Code"), "123456{Enter}");
+    expect(document.getElementById("agency-search")).toBeInTheDocument();
+  });
+
   it("stays on verify when email becomes invalid after send", async () => {
     const user = await reachVerify();
     await user.type(screen.getByLabelText("Work email"), "ada@northline.test");
