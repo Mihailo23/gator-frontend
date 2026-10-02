@@ -73,6 +73,7 @@ describe("PublicAgencyEntry", () => {
     await user.type(screen.getByLabelText("Code"), "12345");
     await user.click(screen.getByRole("button", { name: "Continue" }));
     expect(screen.getByLabelText("Code")).toBeInTheDocument();
+    expect(screen.getByText("Enter 6 digits.")).toBeInTheDocument();
 
     await user.clear(screen.getByLabelText("Code"));
     await user.type(screen.getByLabelText("Code"), "1234567");

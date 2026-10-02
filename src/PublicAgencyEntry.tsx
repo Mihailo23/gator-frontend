@@ -33,6 +33,7 @@ export function PublicAgencyEntry() {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
+  const [codeError, setCodeError] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [agency, setAgency] = useState<Agency | null>(null);
   const [draftName, setDraftName] = useState("");
@@ -55,7 +56,12 @@ export function PublicAgencyEntry() {
   }
 
   function continueFromCode() {
-    if (!isWorkEmail(email) || !isVerificationCode(code)) return;
+    if (!isWorkEmail(email)) return;
+    if (!isVerificationCode(code)) {
+      setCodeError("Enter 6 digits.");
+      return;
+    }
+    setCodeError(null);
     setStep("find");
   }
 
@@ -118,6 +124,8 @@ export function PublicAgencyEntry() {
           {codeSent ? (
             <>
               <TextField id="code" label="Code" value={code} onChange={setCode} />
+              <p className={styles.lede}>Any 6 digits.</p>
+              {codeError ? <p className={styles.lede}>{codeError}</p> : null}
               <Button onClick={continueFromCode}>Continue</Button>
             </>
           ) : null}
