@@ -104,7 +104,11 @@ export function PublicAgencyEntry() {
           <h1 className={slip.title}>Let’s verify your identity</h1>
           <p className={slip.lede}>A work email confirms who started, before any agency details.</p>
           <TextField id="work-email" label="Work email" value={email} onChange={setEmail} />
-          <Button type={codeSent ? "button" : "submit"} onClick={sendCode}>
+          <Button
+            type={codeSent ? "button" : "submit"}
+            onClick={sendCode}
+            disabled={!isWorkEmail(email)}
+          >
             Send code
           </Button>
           {codeSent ? (
