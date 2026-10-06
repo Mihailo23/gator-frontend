@@ -1,5 +1,5 @@
-import { HomeQuoteForm } from "./HomeQuoteForm.js";
+import { PublicAgencyEntry } from "./PublicAgencyEntry.js";
 
 export default function App() {
-  return <HomeQuoteForm />;
+  return <PublicAgencyEntry />;
 }
