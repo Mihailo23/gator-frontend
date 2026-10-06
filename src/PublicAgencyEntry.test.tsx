@@ -41,15 +41,19 @@ describe("PublicAgencyEntry", () => {
     return user;
   }
 
-  it("hides Code until the email has a local part and a domain", async () => {
+  it("keeps Send code disabled until the email has a local part and a domain", async () => {
     const user = await reachVerify();
+    const send = screen.getByRole("button", { name: "Send code" });
+    expect(send).toBeDisabled();
+
     await user.type(screen.getByLabelText("Work email"), "not-an-email");
-    await user.click(screen.getByRole("button", { name: "Send code" }));
+    expect(send).toBeDisabled();
     expect(screen.queryByLabelText("Code")).not.toBeInTheDocument();
 
     await user.clear(screen.getByLabelText("Work email"));
     await user.type(screen.getByLabelText("Work email"), "  ada@northline.test  ");
-    await user.click(screen.getByRole("button", { name: "Send code" }));
+    expect(send).toBeEnabled();
+    await user.click(send);
     expect(screen.getByLabelText("Code")).toBeInTheDocument();
   });
 

@@ -1,59 +1,68 @@
 .slip {
-  width: min(560px, 100%);
+  width: min(var(--slip-width), 100%);
   background: var(--card);
   color: var(--ink);
-  border: 1px solid var(--line);
+  border: var(--hairline) solid var(--line);
   border-radius: var(--radius);
   overflow: hidden;
-  font-size: var(--text-body);
-  font-family: var(--font-sans);
+  font: 400 var(--text-md) / 1.45 var(--font-sans);
 }
 
 .spine {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: var(--pad-form);
-  background: color-mix(in srgb, var(--signal) 18%, var(--card));
-  border-bottom: 2px dotted var(--line);
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: var(--signal-wash);
+  border-bottom: var(--ring) dotted var(--line);
 }
 
 .kicker {
-  font-size: 11px;
-  color: var(--mute);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  color: var(--ink-soft);
 }
 
 .id {
-  font: 700 18px/1.1 var(--font-serif);
-  margin: 6px 0 0;
+  font: 700 var(--text-lg) / 1.15 var(--font-serif);
+  margin: var(--space-1) 0 0;
 }
 
 .body {
-  padding: var(--pad-form);
+  padding: var(--space-6);
   display: grid;
-  gap: 14px;
+  gap: var(--space-4);
 }
 
 .title {
-  font: 600 30px/1.05 var(--font-serif);
-  letter-spacing: -0.03em;
+  font: 700 var(--text-xl) / 1.15 var(--font-serif);
   margin: 0;
 }
 
 .lede {
   margin: 0;
-  color: var(--mute);
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  line-height: 1.45;
 }
 
 .pair {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .note {
   margin: 0;
-  color: var(--mute);
-  font-size: 13px;
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+@media (max-width: 480px) {
+  .spine,
+  .body {
+    padding: var(--space-5);
+  }
 }
